@@ -1,11 +1,7 @@
-<script>
-
-</script>
-
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
-      <v-card class="logo py-4 d-flex justify-center"> 用語集一覧 </v-card>
+      <v-card class="logo py-4 d-flex justify-center"> 用語詳細 </v-card>
       <v-card> </v-card>
     </v-col>
   </v-row>
