@@ -1,8 +1,14 @@
 <script>
-import { defineComponent, ref, computed } from '@vue/composition-api'
+import {
+  defineComponent,
+  ref,
+  computed,
+  useContext,
+} from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  setup(_, context) {
+  setup() {
+    const { route } = useContext()
     // 用語集一覧データ
     const termCard = ref({
       id: 1,
@@ -53,8 +59,8 @@ export default defineComponent({
         examples: ['具体例1', '具体例2', '具体例3'],
       },
     ]
-    const glossaryId = computed(() => context.root.$route.params.glossaryId)
-    const termId = computed(() => context.root.$route.params.termId)
+    const glossaryId = computed(() => route.params.glossaryId)
+    const termId = computed(() => route.params.termId)
     const pageName = ref('用語集一覧')
 
     const setReferenceCard = (termCardId) => {

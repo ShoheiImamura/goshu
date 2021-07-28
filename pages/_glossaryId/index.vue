@@ -1,8 +1,9 @@
 <script>
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  setup(_, context) {
+  setup() {
+    const { route } = useContext()
     // 用語集（用語一覧）データ
     const termCards = [
       {
@@ -38,7 +39,7 @@ export default defineComponent({
       },
     ]
 
-    const glossaryId = computed(() => context.root.$route.params.glossaryId)
+    const glossaryId = computed(() => route.params.glossaryId)
     return { glossaryId, termCards }
   },
 })
