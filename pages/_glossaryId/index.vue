@@ -39,7 +39,7 @@ export default defineComponent({
       },
     ]
 
-    const glossaryId = computed(() => route.params.glossaryId)
+    const glossaryId = computed(() => route.value.params.glossaryId)
     return { glossaryId, termCards }
   },
 })

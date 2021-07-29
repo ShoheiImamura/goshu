@@ -59,8 +59,8 @@ export default defineComponent({
         examples: ['具体例1', '具体例2', '具体例3'],
       },
     ]
-    const glossaryId = computed(() => route.params.glossaryId)
-    const termId = computed(() => route.params.termId)
+    const glossaryId = computed(() => route.value.params.glossaryId)
+    const termId = computed(() => route.value.params.termId)
     const pageName = ref('用語集一覧')
 
     const setReferenceCard = (termCardId) => {

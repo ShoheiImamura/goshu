@@ -18,7 +18,7 @@ export default defineComponent({
       },
     ]
     const { route, $axios } = useContext()
-    const glossaryId = computed(() => route.params.glossaryId)
+    const glossaryId = computed(() => route.value.params.glossaryId)
     const pageName = ref('用語集一覧')
     const getTestData = async () => {
       await $axios.$get('http://localhost/api/test').then().catch()
