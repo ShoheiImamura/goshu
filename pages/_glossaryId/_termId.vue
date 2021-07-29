@@ -21,7 +21,7 @@ export default defineComponent({
       examples: [
         { name: 'アーパネット', id: 2 },
         { name: 'アクセシビリティ', id: 3 },
-        { name: '具体例3', id: 4 },
+        { name: '具体例3', id: 2 },
       ],
     })
 
@@ -62,11 +62,21 @@ export default defineComponent({
     const glossaryId = computed(() => route.value.params.glossaryId)
     const termId = computed(() => route.value.params.termId)
     const pageName = ref('用語集一覧')
+    const show = ref(true)
 
     const setReferenceCard = (termCardId) => {
-      referenceCard.value = referencesData.find((data) => {
-        return data.id === termCardId
-      })
+      toggleShow()
+      // 一旦非表示にして、また再表示する
+      setTimeout(() => {
+        referenceCard.value = referencesData.find((data) => {
+          return data.id === termCardId
+        })
+        toggleShow()
+      }, 500)
+    }
+
+    const toggleShow = () => {
+      show.value = !show.value
     }
     return {
       pageName,
@@ -75,6 +85,8 @@ export default defineComponent({
       termCard,
       referenceCard,
       setReferenceCard,
+      show,
+      toggleShow,
     }
   },
 })
@@ -83,34 +95,37 @@ export default defineComponent({
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
       <v-card class="logo py-4 d-flex justify-center"> 用語詳細 </v-card>
-      <!-- 履歴カード -->
-      <v-card outlined> </v-card>
       <!-- メインカード -->
       <v-card outlined
         ><v-card-subtitle> {{ termCard.name }}</v-card-subtitle>
-        <v-card-text>
+        <v-card-text class="text-caption">
           <div>{{ termCard.discription }}</div>
-          <v-divider></v-divider>
-          <div
+          <v-divider class="ma-1"></v-divider>
+          <span
             v-for="(example, index) in termCard.examples"
             :key="index"
             @click="setReferenceCard(example.id)"
           >
-            {{ example.name }}
-          </div>
+            #{{ example.name }}
+          </span>
         </v-card-text>
       </v-card>
       <!-- 参照カード -->
-      <v-card outlined
-        ><v-card-subtitle> {{ referenceCard.name }}</v-card-subtitle>
-        <v-card-text>
-          <div>{{ referenceCard.discription }}</div>
-          <v-divider></v-divider>
-          <div v-for="(example, index) in referenceCard.examples" :key="index">
-            {{ example }}
-          </div>
-        </v-card-text>
-      </v-card>
+      <v-scroll-x-reverse-transition mode="out-in">
+        <v-card v-show="show" outlined class="mt-2"
+          ><v-card-subtitle>{{ referenceCard.name }}</v-card-subtitle>
+          <v-card-text class="text-caption">
+            <div>{{ referenceCard.discription }}</div>
+            <v-divider></v-divider>
+            <span
+              v-for="(example, index) in referenceCard.examples"
+              :key="index"
+            >
+              #{{ example }}
+            </span>
+          </v-card-text>
+        </v-card>
+      </v-scroll-x-reverse-transition>
     </v-col>
   </v-row>
 </template>

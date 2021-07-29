@@ -1,12 +1,6 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
-      app
-    >
+    <v-navigation-drawer v-model="drawer" :clipped="clipped" fixed app>
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
@@ -35,16 +29,6 @@
         <Nuxt />
       </v-container>
     </v-main>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light> mdi-repeat </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
     <v-footer :absolute="!fixed" app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
@@ -52,29 +36,37 @@
 </template>
 
 <script>
-export default {
-  data() {
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  props: {
+    title: {
+      type: String,
+      default: 'タイトルが設定されていません。',
+    },
+  },
+  setup() {
+    const clipped = ref(false)
+    const drawer = ref(false)
+    const fixed = ref(false)
+    const items = ref([
+      {
+        icon: 'mdi-apps',
+        title: 'Home',
+        to: '/',
+      },
+      {
+        icon: 'mdi-chart-bubble',
+        title: 'About',
+        to: '/about',
+      },
+    ])
     return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Home',
-          to: '/',
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'About',
-          to: '/about',
-        },
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: '脳に優しい用語集たち',
+      clipped,
+      drawer,
+      fixed,
+      items,
     }
   },
-}
+})
 </script>
