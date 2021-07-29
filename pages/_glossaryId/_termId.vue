@@ -7,6 +7,17 @@ import {
 } from '@nuxtjs/composition-api'
 
 export default defineComponent({
+  transition(to, from) {
+    if (from === undefined) {
+      return ''
+    } else if (from.name === 'glossaryId') {
+      // 一覧から
+      return ''
+    } else if (from.name === 'glossaryId-termId') {
+      // 詳細から
+      return 'detil'
+    }
+  },
   setup() {
     const { route } = useContext()
     // 用語集一覧データ
@@ -129,3 +140,13 @@ export default defineComponent({
     </v-col>
   </v-row>
 </template>
+<style>
+.detail-enter-active,
+.detail-leave-active {
+  transition: opacity 0.5s;
+}
+.detail-enter,
+.detail-leave-to {
+  opacity: 0;
+}
+</style>
