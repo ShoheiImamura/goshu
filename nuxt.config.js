@@ -41,7 +41,10 @@ export default {
     '@nuxtjs/vuetify',
     '@nuxtjs/composition-api/module',
   ],
-
+  generate: {
+    // choose to suit your project
+    interval: 2000,
+  },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
