@@ -81,5 +81,10 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+  },
+  transition: {
+    name: "slide-x-transition",
+    mode: "out-in",
+    duration: 300
+  },
 }
