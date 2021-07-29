@@ -21,7 +21,9 @@ export default defineComponent({
     const glossaryId = computed(() => route.value.params.glossaryId)
     const pageName = ref('用語集一覧')
     const getTestData = async () => {
-      await $axios.$get('http://localhost/api/test').then().catch()
+      // const dataFromLocal = await $axios.$get('http://localhost/api/test').then().catch()
+      const dataFronHeroku = await $axios.$get('https://api-goshu.herokuapp.com/api/test').then().catch()
+      console.log(dataFronHeroku);
     }
     return {
       pageName,
