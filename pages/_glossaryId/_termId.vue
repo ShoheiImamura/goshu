@@ -74,6 +74,7 @@ export default defineComponent({
     const termId = computed(() => route.value.params.termId)
     const pageName = ref('用語集一覧')
     const show = ref(true)
+    const e1 = ref(2)
 
     const setReferenceCard = (termCardId) => {
       toggleShow()
@@ -84,6 +85,7 @@ export default defineComponent({
         })
         toggleShow()
       }, 500)
+      e1.value = termCardId
     }
 
     const toggleShow = () => {
@@ -98,6 +100,8 @@ export default defineComponent({
       setReferenceCard,
       show,
       toggleShow,
+      referencesData,
+      e1,
     }
   },
 })
@@ -122,21 +126,33 @@ export default defineComponent({
         </v-card-text>
       </v-card>
       <!-- 参照カード -->
-      <v-scroll-x-reverse-transition mode="out-in">
-        <v-card v-show="show" outlined class="mt-2"
-          ><v-card-subtitle>{{ referenceCard.name }}</v-card-subtitle>
-          <v-card-text class="text-caption">
-            <div>{{ referenceCard.discription }}</div>
-            <v-divider></v-divider>
-            <span
-              v-for="(example, index) in referenceCard.examples"
-              :key="index"
-            >
-              #{{ example }}
-            </span>
-          </v-card-text>
-        </v-card>
-      </v-scroll-x-reverse-transition>
+      <!-- タブ検証 -->
+      <v-stepper v-model="e1">
+        <v-stepper-items>
+          <v-stepper-content
+            v-for="reference in referencesData"
+            :key="reference.id"
+            :step="reference.id"
+          >
+            <v-card class="text-caption" outlined>
+              <v-card-subtitle>{{ reference.name }}</v-card-subtitle>
+              <v-card-text class="text-caption">
+                <div>{{ reference.discription }}</div>
+                <v-divider></v-divider>
+                <span
+                  v-for="(example, index) in reference.examples"
+                  :key="index"
+                >
+                  #{{ example }}
+                </span>
+              </v-card-text>
+            </v-card>
+            <v-btn color="primary" @click="e1 = '1'"> Continue </v-btn>
+            <v-btn text> Cancel </v-btn>
+          </v-stepper-content>
+        </v-stepper-items>
+      </v-stepper>
+      <!-- タブ検証おわり -->
     </v-col>
   </v-row>
 </template>
